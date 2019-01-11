@@ -6,6 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import * as actions from '../actions/audioActions';
 import TaskItem from '../components/controls/TaskItem';
+import TaskChips from '../components/controls/TaskChips';
 
 configure({ adapter: new Adapter() })
 
@@ -15,6 +16,8 @@ describe('>>>Control: TaskItem --- Snapshot',()=>{
         id: "TaskItem",
         length: 100,
         name: 'LUK-001-001006',
+        avatar: '',
+        taskChips: ["In Progress, My Tasks"],
     };
 
     it('+++capturing Snapshot of TaskItem', () => {
@@ -29,6 +32,8 @@ describe('>>>Control: TaskItem', () => {
         id: "TaskItem",
         length: 100,
         name: 'LUK-001-001006',
+        avatar: '',
+        taskChips: ["In Progress, My Tasks"],
     };
 
     beforeEach(()=>{

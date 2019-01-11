@@ -49,6 +49,8 @@ class TaskPanel extends React.Component<IProps, object> {
                 name={t.name?t.name:""}
                 length={t.length != null? t.length: 0}
                 selected={t.id === selectedTask}
+                avatar={this.GetUserAvatar(t.assignedto)}
+                taskChips={["Reviewed"]}
                 select={selectTask.bind(this,selectedUser, t.id)}/>
             <div className={t.id === selectedTask? "selectBar": "placeHolder"}>{"\u00A0"}</div>
         </div>
@@ -66,6 +68,8 @@ class TaskPanel extends React.Component<IProps, object> {
                 name={t.name?t.name:""}
                 length={t.length != null? t.length: 0}
                 selected={t.id === selectedTask}
+                avatar={this.GetUserAvatar(t.assignedto)}
+                taskChips={["Transcribed"]}
                 select={selectTask.bind(this,selectedUser, t.id)}/>
             <div className={t.id === selectedTask? "selectBar": "placeHolder"}>{"\u00A0"}</div>
         </div>
@@ -85,6 +89,7 @@ class TaskPanel extends React.Component<IProps, object> {
                 name={t.name?t.name:""}
                 length={t.length != null? t.length: 0}
                 selected={t.id === selectedTask}
+                avatar={this.GetUserAvatar(t.assignedto)}
                 select={assignTask.bind(this,t.id, selectedUser)}/>
             <div className="placeHolder">{"\u00A0"}</div>
         </div>
@@ -98,6 +103,7 @@ class TaskPanel extends React.Component<IProps, object> {
                 name={t.name?t.name:""}
                 length={t.length != null? t.length: 0}
                 selected={t.id === selectedTask}
+                avatar={this.GetUserAvatar(t.assignedto)}
                 select={assignTask.bind(this,t.id, selectedUser)}/>
             <div className="placeHolder">{"\u00A0"}</div>
         </div>
@@ -113,6 +119,8 @@ class TaskPanel extends React.Component<IProps, object> {
                     name={t.name?t.name:""}
                     length={t.length != null? t.length: 0}
                     selected={t.id === selectedTask}
+                    avatar={this.GetUserAvatar(t.assignedto)}
+                    taskChips={["In Progress, My Tasks"]}
                     select={assignTask.bind(this,t.id, selectedUser)}/>
                 <div className="placeHolder">{"\u00A0"}</div>
             </div>
@@ -128,6 +136,8 @@ class TaskPanel extends React.Component<IProps, object> {
                     name={t.name?t.name:""}
                     length={t.length != null? t.length: 0}
                     selected={t.id === selectedTask}
+                    avatar={this.GetUserAvatar(t.assignedto)}
+                    taskChips={["Transcribed"]}
                     select={assignTask.bind(this,t.id, selectedUser)}/>
                 <div className="placeHolder">{"\u00A0"}</div>
             </div>
@@ -141,6 +151,8 @@ class TaskPanel extends React.Component<IProps, object> {
                     name={t.name?t.name:""}
                     length={t.length != null? t.length: 0}
                     selected={t.id === selectedTask}
+                    avatar={this.GetUserAvatar(t.assignedto)}
+                    taskChips={["Transcribed"]}
                     select={assignTask.bind(this,t.id, selectedUser)}/>
                 <div className="placeHolder">{"\u00A0"}</div>
             </div>
@@ -156,6 +168,8 @@ class TaskPanel extends React.Component<IProps, object> {
                 name={t.name?t.name:""}
                 length={t.length != null? t.length: 0}
                 selected={t.id === selectedTask}
+                avatar={this.GetUserAvatar(t.assignedto)}
+                taskChips={["Reviewed"]}
                 select={assignTask.bind(this,t.id, selectedUser)}/>
             <div className="placeHolder">{"\u00A0"}</div>
         </div>
@@ -169,6 +183,8 @@ class TaskPanel extends React.Component<IProps, object> {
                     name={t.name?t.name:""}
                     length={t.length != null? t.length: 0}
                     selected={t.id === selectedTask}
+                    avatar={this.GetUserAvatar(t.assignedto)}
+                    taskChips={["Reviewed"]}
                     select={assignTask.bind(this,t.id, selectedUser)}/>
                 <div className="placeHolder">{"\u00A0"}</div>
             </div>
@@ -184,6 +200,8 @@ class TaskPanel extends React.Component<IProps, object> {
                 name={t.name?t.name:""}
                 length={t.length != null? t.length: 0}
                 selected={t.id === selectedTask}
+                avatar={this.GetUserAvatar(t.assignedto)}
+                taskChips={["Synced"]}
                 select={assignTask.bind(this,t.id, selectedUser)}/>
             <div className="placeHolder">{"\u00A0"}</div>
         </div>
@@ -197,6 +215,8 @@ class TaskPanel extends React.Component<IProps, object> {
                     name={t.name?t.name:""}
                     length={t.length != null? t.length: 0}
                     selected={t.id === selectedTask}
+                    avatar={this.GetUserAvatar(t.assignedto)}
+                    taskChips={["Synced"]}
                     select={assignTask.bind(this,t.id, selectedUser)}/>
                 <div className="placeHolder">{"\u00A0"}</div>
             </div>
@@ -212,6 +232,8 @@ class TaskPanel extends React.Component<IProps, object> {
                 name={t.name?t.name:""}
                 length={t.length != null? t.length: 0}
                 selected={t.id === selectedTask}
+                avatar={this.GetUserAvatar(t.assignedto)}
+                taskChips={["All Tasks"]}
                 select={assignTask.bind(this,t.id, selectedUser)}/>
             <div className="placeHolder">{"\u00A0"}</div>
         </div>
@@ -248,6 +270,17 @@ class TaskPanel extends React.Component<IProps, object> {
                 {wrapper}
             </div>
         )
+
+
+    }
+
+    private GetUserAvatar(assignedTo: string = ""){
+        const { users} = this.props;
+        if(assignedTo.length === 0){
+            return "/assets/smile.svg";
+        }
+        const user = users.filter(u => u.username.id === assignedTo)[0];
+        return user.username.avatarUri;
     }
 };
 
@@ -272,6 +305,8 @@ interface IStateProps {
     reviewedOtherTasks: ITask[];
     syncedTasks: ITask[];
     syncedOtherTasks: ITask[];
+    users: IUser[];
+    tasks: IProject[];
 }
 
 const mapStateToProps = (state: IState): IStateProps => ({
@@ -293,8 +328,11 @@ const mapStateToProps = (state: IState): IStateProps => ({
     strings: userStrings(state, {layout: "transcriber"}),
     syncedOtherTasks: taskList(state).syncedOtherTasks,
     syncedTasks: taskList(state).syncedTasks,
+    tasks: state.tasks.projects,
     transcribedOtherTasks: taskList(state).transcribedOtherTasks,
     transcribedTasks: taskList(state).transcribedTasks,
+    users: state.users.users,
+
   });
   
   interface IDispatchProps {
